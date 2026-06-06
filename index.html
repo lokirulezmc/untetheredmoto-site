@@ -3,254 +3,879 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Untethered Moto - The Riding Companion Built for Riders</title>
+  <title>Untethered Moto - Built for Riders. Not Drivers.</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    body {
-      background: #0e0e0e;
-      color: #f0f0f0;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+    :root {
+      --orange: #f97316;
+      --orange-dark: #c2410c;
+      --blue: #38bdf8;
+      --bg: #080810;
+      --surface: #0f0f1a;
+      --card: #13131f;
+      --border: #1e1e30;
+      --text: #f1f1f5;
+      --muted: #6b6b80;
     }
 
-    header {
-      padding: 24px 32px;
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ---- NAV ---- */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 16px 48px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid #1e1e1e;
+      background: rgba(8, 8, 16, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
     }
 
-    .logo {
-      font-size: 20px;
-      font-weight: 700;
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-logo img {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+
+    .nav-logo-text {
+      font-size: 18px;
+      font-weight: 800;
       letter-spacing: -0.5px;
-      color: #f0f0f0;
+      color: var(--text);
     }
 
-    .logo span { color: #f97316; }
+    .nav-logo-text span { color: var(--orange); }
 
-    nav a {
-      color: #999;
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav-links a {
+      color: var(--muted);
       text-decoration: none;
       font-size: 14px;
-      margin-left: 24px;
+      font-weight: 500;
       transition: color 0.2s;
     }
 
-    nav a:hover { color: #f0f0f0; }
+    .nav-links a:hover { color: var(--text); }
 
-    main {
-      flex: 1;
+    .nav-cta {
+      background: var(--orange);
+      color: #fff !important;
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-weight: 600 !important;
+      transition: background 0.2s !important;
+    }
+
+    .nav-cta:hover { background: var(--orange-dark) !important; color: #fff !important; }
+
+    /* ---- HERO ---- */
+    .hero {
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 80px 32px;
       text-align: center;
+      padding: 120px 24px 80px;
+      position: relative;
+      overflow: hidden;
     }
 
-    .badge {
-      display: inline-block;
-      background: #1a1a1a;
-      border: 1px solid #2a2a2a;
-      color: #f97316;
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(249,115,22,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 80% 50%, rgba(56,189,248,0.07) 0%, transparent 50%),
+        radial-gradient(ellipse 60% 40% at 20% 50%, rgba(249,115,22,0.05) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(249,115,22,0.1);
+      border: 1px solid rgba(249,115,22,0.3);
+      color: var(--orange);
       font-size: 12px;
       font-weight: 600;
-      letter-spacing: 1px;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
-      padding: 6px 14px;
+      padding: 6px 16px;
       border-radius: 100px;
-      margin-bottom: 28px;
+      margin-bottom: 32px;
+      animation: fadeUp 0.6s ease both;
     }
 
-    h1 {
-      font-size: clamp(36px, 6vw, 64px);
-      font-weight: 800;
-      letter-spacing: -1px;
-      line-height: 1.1;
-      max-width: 700px;
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--orange);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    .hero-logo {
+      width: clamp(160px, 28vw, 280px);
+      height: clamp(160px, 28vw, 280px);
+      object-fit: contain;
+      margin-bottom: 32px;
+      animation: fadeUp 0.6s 0.1s ease both;
+      filter: drop-shadow(0 0 40px rgba(249,115,22,0.25)) drop-shadow(0 0 80px rgba(56,189,248,0.15));
+    }
+
+    .hero-logo:hover {
+      filter: drop-shadow(0 0 60px rgba(249,115,22,0.4)) drop-shadow(0 0 100px rgba(56,189,248,0.25));
+      transition: filter 0.4s ease;
+    }
+
+    .hero h1 {
+      font-size: clamp(40px, 7vw, 80px);
+      font-weight: 900;
+      letter-spacing: -2px;
+      line-height: 1.0;
+      max-width: 800px;
       margin-bottom: 20px;
+      animation: fadeUp 0.6s 0.2s ease both;
     }
 
-    h1 span { color: #f97316; }
+    .hero h1 .line2 {
+      background: linear-gradient(90deg, var(--orange), var(--blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
 
-    .tagline {
-      font-size: clamp(16px, 2.5vw, 20px);
-      color: #888;
-      max-width: 480px;
+    .hero-sub {
+      font-size: clamp(16px, 2.5vw, 22px);
+      color: var(--muted);
+      max-width: 520px;
       line-height: 1.6;
-      margin-bottom: 48px;
+      margin-bottom: 44px;
+      animation: fadeUp 0.6s 0.3s ease both;
     }
 
-    .cta-group {
+    .hero-actions {
       display: flex;
-      gap: 16px;
-      align-items: center;
+      gap: 14px;
       flex-wrap: wrap;
       justify-content: center;
+      animation: fadeUp 0.6s 0.4s ease both;
     }
 
     .btn-primary {
-      background: #f97316;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, var(--orange), #ea580c);
       color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 14px 28px;
+      border-radius: 12px;
+      text-decoration: none;
+      box-shadow: 0 4px 24px rgba(249,115,22,0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(249,115,22,0.5);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
       font-size: 15px;
       font-weight: 600;
       padding: 14px 28px;
-      border-radius: 10px;
+      border-radius: 12px;
       text-decoration: none;
-      transition: background 0.2s, transform 0.1s;
+      border: 1px solid var(--border);
+      transition: background 0.2s, border-color 0.2s, transform 0.2s;
     }
 
-    .btn-primary:hover { background: #ea6c0a; transform: translateY(-1px); }
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.15);
+      transform: translateY(-2px);
+    }
 
-    .btn-secondary {
-      background: transparent;
-      color: #888;
-      font-size: 15px;
+    .hero-scroll {
+      margin-top: 64px;
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      animation: fadeUp 0.6s 0.6s ease both;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .hero-scroll::after {
+      content: '';
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--muted), transparent);
+      animation: scrollLine 2s infinite;
+    }
+
+    /* ---- STATS ---- */
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .stat {
+      flex: 1;
+      max-width: 220px;
+      padding: 32px 24px;
+      text-align: center;
+      border-right: 1px solid var(--border);
+    }
+
+    .stat:last-child { border-right: none; }
+
+    .stat-value {
+      font-size: 32px;
+      font-weight: 900;
+      letter-spacing: -1px;
+      background: linear-gradient(135deg, var(--orange), var(--blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 4px;
       font-weight: 500;
-      padding: 14px 28px;
-      border-radius: 10px;
-      text-decoration: none;
-      border: 1px solid #2a2a2a;
-      transition: border-color 0.2s, color 0.2s;
     }
 
-    .btn-secondary:hover { border-color: #444; color: #f0f0f0; }
+    /* ---- FEATURES ---- */
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 100px 24px;
+    }
 
-    .features {
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    .section-title {
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 900;
+      letter-spacing: -1px;
+      text-align: center;
+      margin-bottom: 16px;
+      line-height: 1.1;
+    }
+
+    .section-sub {
+      font-size: 17px;
+      color: var(--muted);
+      text-align: center;
+      max-width: 480px;
+      margin: 0 auto 60px;
+      line-height: 1.6;
+    }
+
+    .features-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-      max-width: 900px;
-      width: 100%;
-      margin-top: 80px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
     }
 
     .feature-card {
-      background: #141414;
-      border: 1px solid #1e1e1e;
-      border-radius: 14px;
-      padding: 24px;
-      text-align: left;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
     }
 
-    .feature-icon {
-      font-size: 28px;
-      margin-bottom: 14px;
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(249,115,22,0.4), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .feature-card:hover {
+      border-color: rgba(249,115,22,0.3);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    }
+
+    .feature-card:hover::before { opacity: 1; }
+
+    .feature-icon-wrap {
+      width: 48px;
+      height: 48px;
+      background: rgba(249,115,22,0.1);
+      border: 1px solid rgba(249,115,22,0.2);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin-bottom: 16px;
+    }
+
+    .feature-card:nth-child(2) .feature-icon-wrap,
+    .feature-card:nth-child(5) .feature-icon-wrap {
+      background: rgba(56,189,248,0.1);
+      border-color: rgba(56,189,248,0.2);
     }
 
     .feature-title {
-      font-size: 15px;
-      font-weight: 600;
+      font-size: 16px;
+      font-weight: 700;
       margin-bottom: 8px;
+      letter-spacing: -0.3px;
     }
 
     .feature-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ---- RIDING MODE HIGHLIGHT ---- */
+    .highlight {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .highlight-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 100px 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .highlight-text .label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 16px;
+    }
+
+    .highlight-text h2 {
+      font-size: clamp(28px, 3.5vw, 42px);
+      font-weight: 900;
+      letter-spacing: -1px;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .highlight-text p {
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+
+    .highlight-points {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .highlight-point {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 15px;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .highlight-point::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      background: rgba(249,115,22,0.15);
+      border: 1px solid rgba(249,115,22,0.4);
+      border-radius: 6px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6l3 3 5-5' stroke='%23f97316' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    .highlight-visual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mode-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px;
+      width: 100%;
+      max-width: 360px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mode-card::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; right: -60px;
+      width: 180px; height: 180px;
+      background: radial-gradient(circle, rgba(249,115,22,0.15), transparent 70%);
+      pointer-events: none;
+    }
+
+    .mode-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(249,115,22,0.15);
+      border: 1px solid rgba(249,115,22,0.3);
+      color: var(--orange);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 20px;
+    }
+
+    .mode-pill::before {
+      content: '';
+      width: 5px; height: 5px;
+      background: var(--orange);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    .mode-speed {
+      font-size: 72px;
+      font-weight: 900;
+      letter-spacing: -3px;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--text), var(--muted));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 4px;
+    }
+
+    .mode-speed-unit {
+      font-size: 18px;
+      color: var(--muted);
+      font-weight: 500;
+      margin-bottom: 24px;
+    }
+
+    .mode-items {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .mode-item {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 10px;
+      padding: 12px 14px;
       font-size: 13px;
-      color: #666;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .mode-item span { font-size: 16px; }
+
+    /* ---- CTA ---- */
+    .cta-section {
+      padding: 120px 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(249,115,22,0.08), transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-logo {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      margin: 0 auto 24px;
+      display: block;
+      filter: drop-shadow(0 0 20px rgba(249,115,22,0.3));
+    }
+
+    .cta-section h2 {
+      font-size: clamp(32px, 5vw, 56px);
+      font-weight: 900;
+      letter-spacing: -1.5px;
+      margin-bottom: 16px;
+      line-height: 1.1;
+    }
+
+    .cta-section p {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 420px;
+      margin: 0 auto 40px;
       line-height: 1.6;
     }
 
     .platform-note {
-      margin-top: 48px;
+      margin-top: 20px;
       font-size: 13px;
-      color: #444;
+      color: #3a3a4a;
     }
 
+    /* ---- FOOTER ---- */
     footer {
-      padding: 24px 32px;
-      border-top: 1px solid #1a1a1a;
+      border-top: 1px solid var(--border);
+      padding: 32px 48px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 16px;
+      background: var(--surface);
     }
 
-    footer p { font-size: 13px; color: #444; }
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
 
-    footer a { color: #666; text-decoration: none; font-size: 13px; }
-    footer a:hover { color: #f0f0f0; }
+    .footer-logo img {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+      border-radius: 6px;
+    }
+
+    .footer-logo-text {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .footer-logo-text span { color: var(--orange); }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--text); }
+
+    .footer-copy {
+      font-size: 13px;
+      color: #2a2a3a;
+    }
+
+    /* ---- ANIMATIONS ---- */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    @keyframes scrollLine {
+      0% { opacity: 0; transform: scaleY(0); transform-origin: top; }
+      50% { opacity: 1; transform: scaleY(1); transform-origin: top; }
+      100% { opacity: 0; transform: scaleY(1); transform-origin: bottom; }
+    }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 900px) {
+      .features-grid { grid-template-columns: repeat(2, 1fr); }
+      .highlight-inner { grid-template-columns: 1fr; gap: 40px; }
+      .highlight-visual { order: -1; }
+      nav { padding: 14px 20px; }
+      .nav-links { gap: 16px; }
+    }
 
     @media (max-width: 600px) {
-      header { padding: 16px 20px; }
-      main { padding: 60px 20px; }
-      footer { padding: 20px; flex-direction: column; align-items: flex-start; }
+      .features-grid { grid-template-columns: 1fr; }
+      .stats { flex-wrap: wrap; }
+      .stat { min-width: 50%; border-bottom: 1px solid var(--border); }
+      nav { padding: 12px 16px; }
+      .nav-links a:not(.nav-cta) { display: none; }
+      footer { padding: 24px 20px; flex-direction: column; align-items: flex-start; }
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <div class="logo">Untethered<span>Moto</span></div>
-    <nav>
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <img src="logo.png" alt="Untethered Moto" />
+      <span class="nav-logo-text">Untethered<span>Moto</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#riding-mode">Riding Mode</a>
       <a href="privacy.html">Privacy</a>
-      <a href="mailto:untetheredmoto@gmail.com">Contact</a>
-    </nav>
-  </header>
+      <a href="https://play.google.com/store/apps/details?id=com.untetheredmoto.app" class="nav-cta">Get the App</a>
+    </div>
+  </nav>
 
-  <main>
-    <div class="badge">Android - Early Access</div>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
 
-    <h1>Built for <span>riders</span>.<br>Not drivers.</h1>
+    <div class="hero-badge">Android - Early Access</div>
 
-    <p class="tagline">
-      The motorcycle companion that gets out of your way when you ride -
-      and has your back when it matters.
+    <img src="logo.png" alt="Untethered Moto" class="hero-logo" />
+
+    <h1>
+      Built for riders.<br>
+      <span class="line2">Not drivers.</span>
+    </h1>
+
+    <p class="hero-sub">
+      The motorcycle companion that gets out of your way when you ride - and has your back when it matters.
     </p>
 
-    <div class="cta-group">
+    <div class="hero-actions">
       <a href="https://play.google.com/store/apps/details?id=com.untetheredmoto.app" class="btn-primary">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.3.17.64.24.99.2l12.6-11.97L13.1 8.3 3.18 23.76zm16.4-10.7L16.5 11.4l-3.4 3.23 3.4 3.23 3.1-1.64a1.8 1.8 0 000-3.16zM3.18.24C2.6.56 2.2 1.18 2.2 2v20c0 .82.4 1.44.98 1.76l.1.06L15.7 12v-.02L3.28.18l-.1.06zm10.31 11.15L3.18.24l.1-.06 9.92 9.3-2.71 1.91z"/></svg>
         Get it on Google Play
       </a>
-      <a href="mailto:untetheredmoto@gmail.com" class="btn-secondary">
-        Contact Us
+      <a href="#features" class="btn-secondary">
+        See Features
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
       </a>
     </div>
 
-    <div class="features">
+    <div class="hero-scroll">Scroll to explore</div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-value">5+</div>
+      <div class="stat-label">Navigation Modes</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">12</div>
+      <div class="stat-label">Hazard Types</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">1-tap</div>
+      <div class="stat-label">Nearest Gas Station</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">24/7</div>
+      <div class="stat-label">Crash Detection</div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <section class="section" id="features">
+    <div class="section-label">Features</div>
+    <h2 class="section-title">Everything a rider needs.<br>Nothing they don't.</h2>
+    <p class="section-sub">Built from scratch for motorcycles. Not a car app with a different icon.</p>
+
+    <div class="features-grid">
       <div class="feature-card">
-        <div class="feature-icon">🗺️</div>
+        <div class="feature-icon-wrap">🗺️</div>
         <div class="feature-title">Curvy Route Generator</div>
-        <div class="feature-desc">Generate scenic loops from wherever you are. Twisties, not highways.</div>
+        <div class="feature-desc">Generate scenic loops from wherever you are. Twisties, not highways. Set your distance and let the app find the ride.</div>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">⛽</div>
+        <div class="feature-icon-wrap">⛽</div>
         <div class="feature-title">One-Tap Gas</div>
-        <div class="feature-desc">Nearest station, no menus, no confirmation. Just go.</div>
+        <div class="feature-desc">Nearest station, no menus, no confirmation. One tap while riding and you're routed. Simple as it should be.</div>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">⚠️</div>
+        <div class="feature-icon-wrap">⚠️</div>
         <div class="feature-title">Hazard Reports</div>
-        <div class="feature-desc">Community-sourced road warnings updated in real time. Potholes, gravel, debris and more.</div>
+        <div class="feature-desc">Community-sourced road warnings in real time. Potholes, gravel, debris, police, road closures and more. Auto-expire after 24 hours.</div>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">🆘</div>
+        <div class="feature-icon-wrap">🆘</div>
         <div class="feature-title">Crash Detection + SOS</div>
-        <div class="feature-desc">Detects a crash and texts your emergency contact with your GPS location automatically.</div>
+        <div class="feature-desc">Detects a crash and automatically texts your emergency contact with your exact GPS location. Cancel if you're fine. Send if you're not.</div>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">🎵</div>
-        <div class="feature-title">Ride Mode</div>
-        <div class="feature-desc">Speed-based UI that strips distractions while moving. Auto DND. Glove-safe controls.</div>
+        <div class="feature-icon-wrap">🌤️</div>
+        <div class="feature-title">Ride Quality Score</div>
+        <div class="feature-desc">Real-time weather conditions scored for riding. Rain, wind, fog, temperature - all factored in so you know before you go.</div>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">🏍️</div>
+        <div class="feature-icon-wrap">🏍️</div>
         <div class="feature-title">Garage</div>
-        <div class="feature-desc">Bike profiles, fuel log, and maintenance tracking - all in one place.</div>
+        <div class="feature-desc">Bike profiles, fuel log, and maintenance tracking. Know your MPG, track your service history, manage multiple bikes.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon-wrap">🎵</div>
+        <div class="feature-title">Spotify Integration</div>
+        <div class="feature-desc">Full Spotify controls without leaving the app. Play, pause, skip, and browse your library - glove-safe large touch targets.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon-wrap">🚗</div>
+        <div class="feature-title">Android Auto</div>
+        <div class="feature-desc">Full Android Auto support. Navigation, hazards, POI search and loop generation all accessible from your head unit.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon-wrap">🔕</div>
+        <div class="feature-title">Auto Do Not Disturb</div>
+        <div class="feature-desc">Speed-triggered DND silences notifications when you're moving. Unlocks automatically when you stop. Fully configurable threshold.</div>
       </div>
     </div>
+  </section>
 
-    <p class="platform-note">Android only. iOS coming soon.</p>
-  </main>
+  <!-- RIDING MODE HIGHLIGHT -->
+  <div class="highlight" id="riding-mode">
+    <div class="highlight-inner">
+      <div class="highlight-text">
+        <div class="label">Riding Mode</div>
+        <h2>The UI disappears<br>when you ride.</h2>
+        <p>Above your speed threshold, Untethered Moto strips away everything that isn't essential. No tab bar. No menus. Just the map, your speed, weather, and media controls. Eyes on the road.</p>
+        <div class="highlight-points">
+          <div class="highlight-point">Speed-triggered - automatic above 15 mph</div>
+          <div class="highlight-point">Glove-safe 64dp minimum touch targets</div>
+          <div class="highlight-point">Auto DND silences your phone</div>
+          <div class="highlight-point">Fatigue break reminders on long rides</div>
+          <div class="highlight-point">Full UI unlocks the moment you stop</div>
+        </div>
+      </div>
+      <div class="highlight-visual">
+        <div class="mode-card">
+          <div class="mode-pill">Riding Mode Active</div>
+          <div class="mode-speed">64</div>
+          <div class="mode-speed-unit">mph</div>
+          <div class="mode-items">
+            <div class="mode-item"><span>🌤️</span> Good riding conditions</div>
+            <div class="mode-item"><span>🔕</span> Do Not Disturb active</div>
+            <div class="mode-item"><span>🎵</span> Now Playing - Spotify</div>
+            <div class="mode-item"><span>⚠️</span> Pothole reported 0.4 mi ahead</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <!-- CTA -->
+  <section class="cta-section">
+    <img src="logo.png" alt="Untethered Moto" class="cta-logo" />
+    <h2>Ready to ride<br>untethered?</h2>
+    <p>Free to download. Pro features for riders who want everything.</p>
+    <div class="hero-actions">
+      <a href="https://play.google.com/store/apps/details?id=com.untetheredmoto.app" class="btn-primary">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.3.17.64.24.99.2l12.6-11.97L13.1 8.3 3.18 23.76zm16.4-10.7L16.5 11.4l-3.4 3.23 3.4 3.23 3.1-1.64a1.8 1.8 0 000-3.16zM3.18.24C2.6.56 2.2 1.18 2.2 2v20c0 .82.4 1.44.98 1.76l.1.06L15.7 12v-.02L3.28.18l-.1.06zm10.31 11.15L3.18.24l.1-.06 9.92 9.3-2.71 1.91z"/></svg>
+        Get it on Google Play
+      </a>
+    </div>
+    <p class="platform-note">Android only - iOS coming soon</p>
+  </section>
+
+  <!-- FOOTER -->
   <footer>
-    <p>&copy; 2026 Untethered Moto. All rights reserved.</p>
-    <a href="privacy.html">Privacy Policy</a>
+    <a href="#" class="footer-logo">
+      <img src="logo.png" alt="Untethered Moto" />
+      <span class="footer-logo-text">Untethered<span>Moto</span></span>
+    </a>
+    <div class="footer-links">
+      <a href="#features">Features</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="mailto:untetheredmoto@gmail.com">Contact</a>
+    </div>
+    <div class="footer-copy">&copy; 2026 Untethered Moto</div>
   </footer>
 
 </body>
