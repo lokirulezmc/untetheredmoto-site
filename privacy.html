@@ -406,7 +406,7 @@
     <div class="page-hero-grid"></div>
     <div class="page-label">Legal</div>
     <h1>Privacy Policy</h1>
-    <p class="page-meta">Effective date: June 6, 2026 &nbsp;&middot;&nbsp; Last updated: June 6, 2026</p>
+    <p class="page-meta">Effective date: June 6, 2026 &nbsp;&middot;&nbsp; Last updated: June 8, 2026</p>
   </div>
 
   <main>
@@ -442,9 +442,9 @@
 
       <div class="data-card">
         <h3>Crash and Diagnostic Data</h3>
-        <div class="data-field"><span class="data-field-label">What</span><span class="data-field-value">App crash logs, device model, Android version, and app version at time of crash.</span></div>
+        <div class="data-field"><span class="data-field-label">What</span><span class="data-field-value">App crash logs including error message, stack trace, device model, Android version, and app version at time of crash.</span></div>
         <div class="data-field"><span class="data-field-label">Why</span><span class="data-field-value">To identify and fix bugs.</span></div>
-        <div class="data-field"><span class="data-field-label">Stored</span><span class="data-field-value">Sent to Firebase Crashlytics (Google). No location data or contact information included.</span></div>
+        <div class="data-field"><span class="data-field-label">Stored</span><span class="data-field-value">JavaScript-layer crashes are sent to our own self-hosted server. Native (system-level) crashes are reported to Firebase Crashlytics (Google). Neither system includes location data or contact information.</span></div>
       </div>
 
       <div class="data-card">
@@ -496,7 +496,7 @@
         <tbody>
           <tr>
             <td>Firebase Crashlytics (Google)</td>
-            <td>Crash reporting</td>
+            <td>Native crash reporting</td>
             <td><a href="https://policies.google.com/privacy" target="_blank">policies.google.com/privacy</a></td>
           </tr>
           <tr>
@@ -511,7 +511,7 @@
           </tr>
         </tbody>
       </table>
-      <p>All map tiles, routing, geocoding, and points of interest are served from our own self-hosted infrastructure. Requests include your GPS coordinates to return relevant results but are not logged beyond standard server access logs.</p>
+      <p>All map tiles, routing, geocoding, points of interest, and JavaScript crash reports are served from or sent to our own self-hosted infrastructure. These are not linked to your identity and are not shared with third parties.</p>
     </div>
 
     <hr class="divider" />
@@ -536,7 +536,8 @@
       <ul>
         <li><strong style="color:var(--text)">On-device data</strong> (emergency contact, saved places, settings) - retained until you delete it in the app or uninstall</li>
         <li><strong style="color:var(--text)">Hazard reports</strong> - deleted automatically after 24 hours, or sooner if enough riders report it as cleared</li>
-        <li><strong style="color:var(--text)">Crash logs</strong> - retained by Firebase Crashlytics per their retention policy (90 days)</li>
+        <li><strong style="color:var(--text)">JS crash reports</strong> - stored on our self-hosted server, retained until reviewed and resolved</li>
+        <li><strong style="color:var(--text)">Native crash logs</strong> - retained by Firebase Crashlytics per their retention policy (90 days)</li>
         <li><strong style="color:var(--text)">Subscription records</strong> - retained by RevenueCat per their retention policy</li>
       </ul>
     </div>
@@ -557,7 +558,7 @@
       <ul>
         <li>Delete your emergency contact and saved places at any time from within the app (Riding Preferences and Settings)</li>
         <li>Request deletion of any hazard reports associated with your anonymous device ID by contacting us</li>
-        <li>Opt out of crash reporting by disabling Firebase analytics on your Android device (Settings &gt; Google &gt; Ads)</li>
+        <li>Opt out of native crash reporting by disabling Firebase analytics on your Android device (Settings &gt; Google &gt; Ads). JavaScript crash reports cannot be disabled as they are required for app stability monitoring.</li>
       </ul>
     </div>
 
